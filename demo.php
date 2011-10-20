@@ -1,6 +1,5 @@
 <?php
-
-require 'Zend/Application.php';
+/** dependencies **/
 require 'Zend/Loader/Autoloader.php';
 require 'Zag/Filter/CharConvert.php';
 
