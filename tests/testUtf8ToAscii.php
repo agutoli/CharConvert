@@ -15,7 +15,7 @@ class Utf8ToAsciiTest extends PHPUnit_Framework_TestCase
     public function testAWithAccent_To_AWithoutAccent()
     {
         $filter = new Zag_Filter_CharConvert();
-        $this->assertEquals('a',$filter->filter('á'));		
+        $this->assertEquals('a', $filter->filter('á'));		
     }
 
     /**
@@ -24,7 +24,7 @@ class Utf8ToAsciiTest extends PHPUnit_Framework_TestCase
     public function testEWithAccent_To_EWithoutAccent()
     {
         $filter = new Zag_Filter_CharConvert();
-        $this->assertEquals('e',$filter->filter('é'));
+        $this->assertEquals('e', $filter->filter('é'));
     }
     
     /**
@@ -33,11 +33,15 @@ class Utf8ToAsciiTest extends PHPUnit_Framework_TestCase
     public function testIWithAccent_To_IWithoutAccent()
     {
         $filter = new Zag_Filter_CharConvert();
-        $this->assertEquals('i',$filter->filter('í'));
+        $this->assertEquals('i', $filter->filter('í'));
     }
     
+    /**
+     * Convert ó to o
+     */
     public function testOWithAccent_To_OWithoutAccent()
     {
-
+		$filter = new Zag_Filter_CharConvert();
+        $this->assertEquals('o', $filter->filter('ó'));
     }
 }
