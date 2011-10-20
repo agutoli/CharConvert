@@ -12,36 +12,54 @@ class Utf8ToAsciiTest extends PHPUnit_Framework_TestCase
     /**
      * Convert á to a
      */
-    public function testAWithAccent_To_AWithoutAccent()
+    public function testAWithAccentAcute_To_AWithoutAccentAcute()
     {
         $filter = new Zag_Filter_CharConvert();
-        $this->assertEquals('a', $filter->filter('á'));		
+        $this->assertEquals('a',$filter->filter('á'));		
     }
 
     /**
      * Convert é to e
      */
-    public function testEWithAccent_To_EWithoutAccent()
+    public function testEWithAccentAcute_To_EWithoutAccentAcute()
     {
         $filter = new Zag_Filter_CharConvert();
-        $this->assertEquals('e', $filter->filter('é'));
+        $this->assertEquals('e',$filter->filter('é'));
     }
     
     /**
      * Convert í to i
      */
-    public function testIWithAccent_To_IWithoutAccent()
+    public function testIWithAccentAcute_To_IWithoutAccentAcute()
     {
         $filter = new Zag_Filter_CharConvert();
-        $this->assertEquals('i', $filter->filter('í'));
+        $this->assertEquals('i',$filter->filter('í'));
     }
     
     /**
      * Convert ó to o
      */
-    public function testOWithAccent_To_OWithoutAccent()
+    public function testOWithAccentAcute_To_OWithoutAccentAcute()
     {
-		$filter = new Zag_Filter_CharConvert();
-        $this->assertEquals('o', $filter->filter('ó'));
+        $filter = new Zag_Filter_CharConvert();
+        $this->assertEquals('o',$filter->filter('ó'));
+    }
+    
+    /**
+     * Convert ú to u
+     */
+    public function testUWithAccentAcute_To_UWithoutAccentAcute()
+    {
+        $filter = new Zag_Filter_CharConvert();
+        $this->assertEquals('u',$filter->filter('ú'));
+    }
+    
+    /**
+     * Convert ão to ao
+     */
+    public function testAOWithAccentTilde_To_AOWithoutAccentTilde()
+    {
+        $filter = new Zag_Filter_CharConvert();
+        $this->assertEquals('ao',$filter->filter('ão'));
     }
 }
