@@ -2,8 +2,8 @@
 
 /** require repositories. pear **/
 require_once 'PHPUnit/Framework.php';
+
 /** path Zag on git hub**/
-require '../Zend/Application.php';
 require '../Zend/Loader/Autoloader.php';
 require '../Zag/Filter/CharConvert.php';
 
@@ -34,5 +34,10 @@ class Utf8ToAsciiTest extends PHPUnit_Framework_TestCase
     {
         $filter = new Zag_Filter_CharConvert();
         $this->assertEquals('i',$filter->filter('í'));
+    }
+    
+    public function testOWithAccent_To_OWithoutAccent()
+    {
+
     }
 }
