@@ -30,12 +30,12 @@ require_once 'Zend/Exception.php';
 
 /**
  * @category Zend
- * @package  App_Filter
+ * @package  Ag_Filter
  * @author   Bruno Thiago Leite Agutoli <brunotla1@gmail.com>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
  * @version  Release: 0.1
  * @license  http://framework.zend.com/license/new-bsd     New BSD License
  */
-class App_Filter_Exception extends Zend_Exception
+class Ag_Filter_Exception extends Zend_Exception
 {}
 

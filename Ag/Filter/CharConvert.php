@@ -3,6 +3,8 @@
  * Zend Framework
  *
  * LICENSE
+ * 
+ * PHP version 5
  *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
@@ -12,11 +14,11 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category   Zend
- * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc.
- * (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @category  Zend
+ * @package   Zend_Filter
+ * @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc.
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @
  */
 
 /**
@@ -26,13 +28,13 @@ require_once 'Zend/Filter/Interface.php';
 
 /**
  * @category Zend
- * @package  App_Filter
+ * @package  Ag_Filter
  * @author   Bruno Thiago Leite Agutoli <brunotla1@gmail.com>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
  * @version  Release: 0.1
  * @license  http://framework.zend.com/license/new-bsd     New BSD License
  */
-class App_Filter_CharConvert implements Zend_Filter_Interface
+class Ag_Filter_CharConvert implements Zend_Filter_Interface
 {
     /**
      * Corresponds to the third
@@ -108,7 +110,7 @@ class App_Filter_CharConvert implements Zend_Filter_Interface
      * Set replaceWhiteSpace
      * @param  string $value
      * 
-     * @return App_Filter_CharConvert
+     * @return Ag_Filter_CharConvert
      */
     public function setReplaceWhiteSpace($value)
     {
@@ -141,7 +143,7 @@ class App_Filter_CharConvert implements Zend_Filter_Interface
      *
      * @param  string $value
      * 
-     * @return App_Filter_CharConvert
+     * @return Ag_Filter_CharConvert
      */
     public function setLocale($value)
     {
@@ -164,7 +166,7 @@ class App_Filter_CharConvert implements Zend_Filter_Interface
      *
      * @param  string $value
      * 
-     * @return App_Filter_CharConvert
+     * @return Ag_Filter_CharConvert
      */
     public function setEncoding($value)
     {
@@ -177,13 +179,13 @@ class App_Filter_CharConvert implements Zend_Filter_Interface
      *
      * @param  mixed $value
      * 
-     * @throws App_Filter_Exception If filtering $value is impossible
+     * @throws Ag_Filter_Exception If filtering $value is impossible
      * @return mixed
      */
     public function filter($value)
     {
         if (!function_exists('iconv')) {
-            require_once 'App/Filter/Exception.php';
+            require_once 'Ag/Filter/Exception.php';
             throw new Zend_Filter_Exception('Function iconv is required (PHP 4 >= 4.0.5, PHP 5)!');
         }
         //Get options

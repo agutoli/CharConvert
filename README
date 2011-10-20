@@ -1,6 +1,6 @@
 São Paulo, 20 October 2011 10:33 GMT
 
-App Filter CharConvert
+Ag Filter CharConvert
 ======================
 
 The CharConverter is a simple plugin that does the conversion from UTF-8 to
@@ -18,7 +18,7 @@ Examples
 ----------------------
 
 1) Passing parameter as array 
-$filter1 = new App_Filter_CharConvert(array(
+$filter1 = new Ag_Filter_CharConvert(array(
     'replaceWhiteSpace' => '-',
     'locale' => 'en_US',
     'charset'=> 'UTF-8'
@@ -30,12 +30,12 @@ echo $filter1->filter('óóó 10aáééé');//ooo-10aaeee
 
 2) Passing parameter as arguments
 
-$filter2 = new App_Filter_CharConvert('UTF-8', 'en_US', '-');
+$filter2 = new Ag_Filter_CharConvert('UTF-8', 'en_US', '-');
 echo $filter2->filter('éééé ááááá 90');//eeee-aaaaa-90
 
 
 3) Using default behavior
 
-$filter3 = new App_Filter_CharConvert();
+$filter3 = new Ag_Filter_CharConvert();
 echo $filter3->filter('éééé ááááá 90');//eeee aaaaa 90
 
