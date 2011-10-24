@@ -58,10 +58,20 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
     protected $_replaceWhiteSpace;
 
     /**
+     * Allow only Alpha characters and numbers
+     * 
+     * @var string
+     */
+    protected $_onlyAlnum;
+
+    /**
      * Sets filter options
      *
-     * @param  integer|array $quoteStyle
-     * @param  string  $charSet
+     * @param  string|array $charset
+     * @param  string|array $locale
+     * @param  string|array $replaceWhiteSpace
+     * @param  boolean|array $onlyAlnum
+     * 
      * @return void
      */
     public function __construct($options = array())
@@ -72,15 +82,19 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
             $options = func_get_args();
             $temp = array();
             if (isset($options[0])) {
-            	$temp['charset'] = $options[0];
+                $temp['charset'] = $options[0];
             }
             
             if (isset($options[1])) {
-            	$temp['locale'] = $options[1];
+                $temp['locale'] = $options[1];
             }
 
             if (isset($options[2])) {
                 $temp['replaceWhiteSpace'] = $options[2];
+            }
+            
+            if (isset($options[3])) {
+                $temp['onlyAlnum'] = $options[3];
             }
             $options = $temp;
         }
@@ -101,9 +115,14 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
             $options['replaceWhiteSpace'] = false;
         }
 
+        if (!isset($options['onlyAlnum'])) {
+            $options['onlyAlnum'] = false;
+        }
+
         $this->setLocale($options['locale']);
         $this->setEncoding($options['encoding']);
         $this->setReplaceWhiteSpace($options['replaceWhiteSpace']);
+        $this->setOnlyAlnum($options['onlyAlnum']);
     }
 
     /**
@@ -126,6 +145,28 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
     public function getReplaceWhiteSpace()
     {
         return $this->_replaceWhiteSpace;
+    }
+
+    /**
+     * Set onlyAlnum
+     * @param  string $value
+     *
+     * @return Zag_Filter_CharConvert
+     */
+    public function setOnlyAlnum($value)
+    {
+        $this->_onlyAlnum = $value;
+        return $this;
+    }
+
+    /**
+     * Get onlyAlnum
+     *
+     * @return string
+     */
+    public function getOnlyAlnum()
+    {
+        return $this->_onlyAlnum;
     }
 
     /**
@@ -192,12 +233,18 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
         $loc = $this->getLocale();
         $enc = $this->getEncoding();
         $rws = $this->getReplaceWhiteSpace();
+        $oan = $this->getOnlyAlNum();
         //Set locale
         setlocale(LC_ALL, $loc .".". $enc);
         //suppress errors @iconv
         $filtered = @iconv($enc, 'ASCII//TRANSLIT', $value);
+
+        if (true === $oan) {
+            $filtered = preg_replace('/[^a-zA-Z0-9 ]*/', '', trim($filtered));
+        }
+
         if (false !== $rws) {
-            $filtered = preg_replace('/\s\s+/', ' ', trim($filtered));
+            $filtered = preg_replace('/\s\s+/', ' ', $filtered);
             $filtered = str_replace(' ', $rws, $filtered);
         }
         return $filtered;
