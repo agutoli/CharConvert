@@ -1,0 +1,7 @@
+<phpunit>
+  <testsuites>
+    <testsuite name="Remove_Characters_specials">
+      <directory>.</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
