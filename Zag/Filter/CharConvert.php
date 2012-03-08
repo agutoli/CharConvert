@@ -60,9 +60,31 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
     /**
      * Allow only Alpha characters and numbers
      * 
-     * @var string
+     * @var boolean
      */
     protected $_onlyAlnum;
+
+    /**
+     * Sets the characters that are relevant and keeps the text 
+     *
+     * @var string|array
+     */
+    protected $_relevantChars;
+
+   /**
+     * Sets the characters that are relevant and should be 
+     * replaced by the value set in "replaceWhiteSpace"
+     *
+     * @var string|array
+     */
+    protected $_irrelevantChars;
+
+    /**
+     * Constant that holds an empty space
+     *
+     * string WHITE_SPACE
+     */
+    const WHITE_SPACE = ' ';
 
     /**
      * Sets filter options
@@ -71,7 +93,9 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
      * @param  string|array $locale
      * @param  string|array $replaceWhiteSpace
      * @param  boolean|array $onlyAlnum
-     * 
+     * @param  string|array $relevantChars
+     * @param  string|array $irrelevantChars
+     *
      * @return void
      */
     public function __construct($options = array())
@@ -96,6 +120,14 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
             if (isset($options[3])) {
                 $temp['onlyAlnum'] = $options[3];
             }
+
+            if (isset($options[4])) {
+                $temp['relevantChars'] = $options[4];
+            }
+
+            if (isset($options[5])) {
+                $temp['irrelevantChars'] = $options[5];
+            }
             $options = $temp;
         }
         
@@ -112,17 +144,26 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
         }
 
         if (!isset($options['replaceWhiteSpace'])) {
-            $options['replaceWhiteSpace'] = false;
+            $options['replaceWhiteSpace'] = ' ';
         }
 
         if (!isset($options['onlyAlnum'])) {
             $options['onlyAlnum'] = false;
         }
 
+        if (!isset($options['relevantChars'])) {
+            $options['relevantChars'] = '\+';
+        }
+
+        if (!isset($options['irrelevantChars'])) {
+            $options['irrelevantChars'] = '\/'; 
+        }
         $this->setLocale($options['locale']);
         $this->setEncoding($options['encoding']);
         $this->setReplaceWhiteSpace($options['replaceWhiteSpace']);
         $this->setOnlyAlnum($options['onlyAlnum']);
+        $this->setRelevantChars($options['relevantChars']);
+        $this->setIrrelevantChars($options['irrelevantChars']);
     }
 
     /**
@@ -216,6 +257,53 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
     }
 
     /**
+     * Get relevant characters
+     *
+     * @return string|array
+     */
+    public function getRelevantChars()
+    {
+        return $this->_relevantChars;
+    }
+
+    /**
+     * Set characters
+     *
+     * @param  string|array $chars
+     * 
+     * @return Zag_Filter_CharConvert
+     */
+    public function setRelevantChars($chars)
+    {
+        $this->_relevantChars = $chars;
+        return $this;
+    }
+
+    /**
+     * Get irrelevant characters
+     *
+     * @return string|array
+     */
+    public function getIrrelevantChars()
+    {
+        return $this->_irrelevantChars;
+    }
+
+    /**
+     * Set irrelevantes characters arrow irrelevant that the characters 
+     * need to be replaced by the parameter chosen "replaceWhiteSpace"
+     *
+     * @param  string|array $chars
+     * 
+     * @return Zag_Filter_CharConvert
+     */
+    public function setIrrelevantChars($chars)
+    {
+        $this->_irrelevantChars = $chars;
+        return $this;
+    }
+
+    /**
      * Returns the result of filtering $value
      *
      * @param  mixed $value
@@ -227,25 +315,31 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
     {
         if (!function_exists('iconv')) {
             require_once 'Zag/Filter/Exception.php';
-            throw new Zend_Filter_Exception('Function iconv is required (PHP 4 >= 4.0.5, PHP 5)!');
+            throw new Zag_Filter_Exception('Function iconv is required (PHP 4 >= 4.0.5, PHP 5)!');
         }
         //Get options
         $loc = $this->getLocale();
         $enc = $this->getEncoding();
         $rws = $this->getReplaceWhiteSpace();
         $oan = $this->getOnlyAlNum();
+        $rlc = $this->getRelevantChars();
+        $ilc = $this->getIrrelevantChars();
+
         //Set locale
         setlocale(LC_ALL, $loc .".". $enc);
         //suppress errors @iconv
         $filtered = @iconv($enc, 'ASCII//TRANSLIT', $value);
 
         if (true === $oan) {
-            $filtered = preg_replace('/[^a-zA-Z0-9 ]*/', '', trim($filtered));
+            $relevantChars   = (is_array($rlc))? implode('', $rlc) : $rlc;
+            $irrelevantChars = (is_array($ilc))? implode('', $ilc) : $ilc;
+            $filtered  = preg_replace("/[^a-zA-Z0-9{$irrelevantChars}{$relevantChars}\\{$rws} ]*/", '', trim($filtered));
+            $filtered  = preg_replace("/[{$irrelevantChars}{$rws}]+/", self::WHITE_SPACE, $filtered);
         }
 
-        if (false !== $rws) {
-            $filtered = preg_replace('/\s\s+/', ' ', $filtered);
-            $filtered = str_replace(' ', $rws, $filtered);
+        if (self::WHITE_SPACE !== $rws) {
+            $filtered = preg_replace('/\s\s+/', self::WHITE_SPACE, $filtered);
+            $filtered = str_replace(self::WHITE_SPACE, $rws, $filtered);
         }
         return $filtered;
     }
