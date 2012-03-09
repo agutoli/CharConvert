@@ -1,8 +1,5 @@
 <?php
 
-/** require repositories. pear **/
-require_once 'PHPUnit/Framework.php';
-
 /** path Zag on git hub**/
 require_once '../Zend/Loader/Autoloader.php';
 require_once '../Zag/Filter/CharConvert.php';
