@@ -18,7 +18,6 @@
  * @package   Zend_Filter
  * @copyright Copyright (c) 2005-2011 Zend Technologies USA Inc.
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @
  */
 
 /**
@@ -30,7 +29,6 @@ require_once 'Zend/Filter/Interface.php';
  * @category Zend
  * @package  Zag_Filter
  * @author   Bruno Thiago Leite Agutoli <brunotla1@gmail.com>
- * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
  * @version  Release: 0.1
  * @license  http://framework.zend.com/license/new-bsd     New BSD License
  */
