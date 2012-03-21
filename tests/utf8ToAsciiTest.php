@@ -59,4 +59,28 @@ class Utf8ToAsciiTest extends PHPUnit_Framework_TestCase
         $filter = new Zag_Filter_CharConvert();
         $this->assertEquals('ao',$filter->filter('ão'));
     }
+
+    public function testSetLocale_And_ReplaceWhiteSpace()
+    {
+        $filter = new Zag_Filter_CharConvert(array(
+            'locale' => 'pt-BR',
+            'replaceWhiteSpace' => '-'
+        ));
+
+        $this->assertEquals('Capitulo---Teste-de-capitulo---2',$filter->filter('Capítulo - Teste de capítulo - 2'));
+    
+    }
+
+
+    public function testSetLocale_And_ReplaceWhiteSpace_And_OnlyAlnum()
+    {
+        $filter = new Zag_Filter_CharConvert(array(
+            'locale' => 'pt-BR',
+            'replaceWhiteSpace' => '-',
+            'onlyAlnum' => true// note: this parameter is essential if you want to 
+                               //avoid unwanted parameters on conversion or repeating characters such as space
+        ));
+        
+        $this->assertEquals('Capitulo-Teste-de-capitulo-2',$filter->filter('Capítulo - Teste de capítulo - 2'));
+    }
 }
