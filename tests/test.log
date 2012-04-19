@@ -1,9 +1,7 @@
-PHPUnit 3.6.10 by Sebastian Bergmann.
+PHPUnit 3.4.14 by Sebastian Bergmann.
 
-Configuration read from /var/www/repositorios/CharConvert/tests/phpunit.xml
+..........
 
-........
+Time: 0 seconds, Memory: 5.25Mb
 
-Time: 0 seconds, Memory: 5.50Mb
-
-OK (8 tests, 8 assertions)
+OK (10 tests, 10 assertions)
