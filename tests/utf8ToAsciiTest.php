@@ -83,4 +83,17 @@ class Utf8ToAsciiTest extends PHPUnit_Framework_TestCase
         
         $this->assertEquals('Capitulo-Teste-de-capitulo-2',$filter->filter('Capítulo - Teste de capítulo - 2'));
     }
+
+
+    public function testSetLocale_And_OnlyAlnum()
+    {
+        $filter = new Zag_Filter_CharConvert(array(
+            'locale' => 'pt-BR',
+            'onlyAlnum' => true// note: this parameter is essential if you want to 
+                               //avoid unwanted parameters on conversion or repeating characters such as space
+        ));
+
+        $this->assertEquals('Voce nao esta vendo todos os suprimentos nesta carga',$filter->filter('Você não está vendo todos os suprimentos nesta carga'));
+    }
+
 }
