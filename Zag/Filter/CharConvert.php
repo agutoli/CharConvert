@@ -130,7 +130,7 @@ class Zag_Filter_CharConvert implements Zend_Filter_Interface
         }
         
         if (!isset($options['encoding'])) {
-            $options['encoding'] = 'UTF-8';
+            $options['encoding'] = 'utf8';
         }
  
         if (isset($options['charset'])) {
